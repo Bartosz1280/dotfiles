@@ -42,7 +42,7 @@ theme.titlebar_bg_focus                         = theme.bg_focus
 theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_fg_focus                         = theme.fg_focus
 
-theme.menu_height                               = dpi(16)
+theme.menu_height                               = dpi(15)
 theme.menu_width                                = dpi(140)
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 
@@ -90,7 +90,7 @@ theme.widget_scissors                           = theme.dir .. "/icons/scissors.
 theme.tasklist_plain_task_name                  = true
 theme.tasklist_disable_icon                     = true
 
-theme.useless_gap                               = 10
+theme.useless_gap                               = 8
 
 theme.titlebar_close_button_focus               = theme.dir .. "/icons/titlebar/close_focus.png"
 theme.titlebar_close_button_normal              = theme.dir .. "/icons/titlebar/close_normal.png"
@@ -142,8 +142,8 @@ lain.widget.contrib.task.attach(task, {
 task:buttons(my_table.join(awful.button({}, 1, lain.widget.contrib.task.prompt)))
 
 -- Scissors (xsel copy and paste)
-local scissors = wibox.widget.imagebox(theme.widget_scissors)
-scissors:buttons(my_table.join(awful.button({}, 1, function() awful.spawn.with_shell("xsel | xsel -i -b") end)))
+--local scissors = wibox.widget.imagebox(theme.widget_scissors)
+---scissors:buttons(my_table.join(awful.button({}, 1, function() awful.spawn.with_shell("xsel | xsel -i -b") end)))
 
 -- Mail IMAP check
 --[[ commented because it needs to be set before use
@@ -173,39 +173,39 @@ theme.volume = lain.widget.alsabar({
 })
 
 -- MPD
-local musicplr = awful.util.terminal .. " -title Music -g 130x34-320+16 -e ncmpcpp"
-local mpdicon = wibox.widget.imagebox(theme.widget_music)
-mpdicon:buttons(my_table.join(
-    awful.button({ modkey }, 1, function () awful.spawn.with_shell(musicplr) end),
-    awful.button({ }, 1, function ()
-        os.execute("mpc prev")
-        theme.mpd.update()
-    end),
-    awful.button({ }, 2, function ()
-        os.execute("mpc toggle")
-        theme.mpd.update()
-    end),
-    awful.button({ }, 3, function ()
-        os.execute("mpc next")
-        theme.mpd.update()
-    end)))
-theme.mpd = lain.widget.mpd({
-    settings = function()
-        if mpd_now.state == "play" then
-            artist = " " .. mpd_now.artist .. " "
-            title  = mpd_now.title  .. " "
-            mpdicon:set_image(theme.widget_music_on)
-            widget:set_markup(markup.font(theme.font, markup("#FF8466", artist) .. " " .. title))
-        elseif mpd_now.state == "pause" then
-            widget:set_markup(markup.font(theme.font, " mpd paused "))
-            mpdicon:set_image(theme.widget_music_pause)
-        else
-            widget:set_text("")
-            mpdicon:set_image(theme.widget_music)
-        end
-    end
-})
-
+--local musicplr = awful.util.terminal .. " -title Music -g 130x34-320+16 -e ncmpcpp"
+--local mpdicon = wibox.widget.imagebox(theme.widget_music)
+--mpdicon:buttons(my_table.join(
+ --   awful.button({ modkey }, 1, function () awful.spawn.with_shell(musicplr) end),
+--   awful.button({ }, 1, function ()
+--        os.execute("mpc prev")
+        ---theme.mpd.update()
+    ---end),
+    ---awful.button({ }, 2, function ()
+        ---os.execute("mpc toggle")
+        ---theme.mpd.update()
+    ---end),
+    ---awful.button({ }, 3, function ()
+        ---os.execute("mpc next")
+        ---theme.mpd.update()
+    ---end)))
+---theme.mpd = lain.widget.mpd({
+    ---settings = function()
+        ---if mpd_now.state == "play" then
+            ---artist = " " .. mpd_now.artist .. " "
+            ---title  = mpd_now.title  .. " "
+            ---mpdicon:set_image(theme.widget_music_on)
+            ---widget:set_markup(markup.font(theme.font, markup("#FF8466", artist) .. " " .. title))
+        ---elseif mpd_now.state == "pause" then
+            ---widget:set_markup(markup.font(theme.font, " mpd paused "))
+            ---mpdicon:set_image(theme.widget_music_pause)
+        ---else
+            ---widget:set_text("")
+            ---mpdicon:set_image(theme.widget_music)
+        ---end
+    ---end
+---})
+---
 -- MEM
 local memicon = wibox.widget.imagebox(theme.widget_mem)
 local mem = lain.widget.mem({
@@ -369,7 +369,7 @@ function theme.at_screen_connect(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
-            wibox.container.margin(scissors, dpi(4), dpi(8)),
+            --wibox.container.margin(scissors, dpi(4), dpi(8)),
             --[[ using shapes
             pl(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, "#343434"),
             pl(task, "#343434"),
@@ -385,10 +385,10 @@ function theme.at_screen_connect(s)
             -- using separators
             arrow(theme.bg_normal, "#343434"),
 
-            wibox.container.background(wibox.container.margin(wibox.widget { mailicon, theme.mail and theme.mail.widget, layout = wibox.layout.align.horizontal }, dpi(4), dpi(7)), "#343434"),
+            --wibox.container.background(wibox.container.margin(wibox.widget { mailicon, theme.mail and theme.mail.widget, layout = wibox.layout.align.horizontal }, dpi(4), dpi(7)), "#343434"),
             arrow("#343434", theme.bg_normal),
 
-            wibox.container.background(wibox.container.margin(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(6)), theme.bg_focus),
+            --wibox.container.background(wibox.container.margin(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(6)), theme.bg_focus),
             arrow(theme.bg_normal, "#343434"),
 
             wibox.container.background(wibox.container.margin(task, dpi(3), dpi(7)), "#343434"),
@@ -412,7 +412,7 @@ function theme.at_screen_connect(s)
             wibox.container.background(wibox.container.margin(wibox.widget { nil, neticon, net.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(3)), "#C0C0A2"),
             arrow("#C0C0A2", "#777E76"),
 
-            wibox.container.background(wibox.container.margin(binclock.widget, dpi(4), dpi(8)), "#777E76"),
+            --wibox.container.background(wibox.container.margin(binclock.widget, dpi(4), dpi(8)), "#777E76"),
             arrow("#777E76", "alpha"),
             --]]
             s.mylayoutbox,
